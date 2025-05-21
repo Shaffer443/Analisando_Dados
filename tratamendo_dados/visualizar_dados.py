@@ -2,6 +2,8 @@ import selecionar_arquivo.selecionar_arquivo as i
 import funcao_tratamento_dados as f
 import pandas as pd
 import sweetviz as sv
+import openpyxl
+import xlrd
 
 ####################################################################
 # Quantidades de chaves em um dicionário e informar seus nomes:
@@ -21,18 +23,29 @@ letrasB = ["x","l","s"]
 
 tipos=[letrasA, letrasB]
 
-for t in tipos:
-    caminhos = f.verifica_final_string(link_path[0],t)
-    if t == letrasA:
-        print("\n.csv", True)
-        df = pd.read_csv(link_path[0])
-        print(df)
-        break
-    elif t == letrasB:
-        print("\n.xls", True)
-        df = pd.read_excel(link_path[0])
-        print(df)
-        break
+#for t in tipos:
+#    caminhos = f.verifica_final_string(link_path[0],t)
+#    if t == letrasA:
+#        print(".csv", True)
+#        df = pd.read_csv(link_path[0])
+#        print(df)
+#        break
+#    if t == letrasB:
+#        print(".xls", True)
+#        df = pd.read_excel(link_path[0], )
+#        print(df)
+#        break
+
+arquivo = link_path[0]
+
+if arquivo.endswith('.csv'):
+    df = pd.read_csv(arquivo, encoding='utf-8')  # ou 'latin1', se necessário
+elif arquivo.endswith('.xlsx') or arquivo.endswith('.xls'):
+    df = pd.read_excel(arquivo)
+else:
+    raise ValueError("Formato de arquivo não suportado.")
+
+
 
 ####################
 # Modelando, info 01:
