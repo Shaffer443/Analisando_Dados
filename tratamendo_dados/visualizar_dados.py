@@ -1,9 +1,12 @@
 import selecionar_arquivo.selecionar_arquivo as i
 import funcao_tratamento_dados as f
 import pandas as pd
+import numpy as np
 import sweetviz as sv
+from ydata_profiling import ProfileReport
 import openpyxl
 import xlrd
+import webbrowser
 
 ####################################################################
 # Quantidades de chaves em um dicionário e informar seus nomes:
@@ -52,6 +55,7 @@ else:
 
 print("\nSelecione uma Opção:")
 print(" 1 - Sweetviz Analyze")
+print(" 2 - ydata-profiling")
 print(" 0 - Sair")
 
 numero = int(input("Informe o numero: "))
@@ -59,6 +63,14 @@ numero = int(input("Informe o numero: "))
 if numero == 1:
     my_report = sv.analyze(df)
     my_report.show_html()  # Default arguments will generate to "SWEETVIZ_REPORT.html"
+if numero == 2:
+    # Modelo
+    # df = pd.DataFrame(np.random.rand(100, 5), columns=["a", "b", "c", "d", "e"])
+    profile = ProfileReport(df, title="Profiling Report")
+    #profile.to_notebook_iframe()
+    #profile.to_widgets()
+    profile.to_file("relatorio.html")
+    webbrowser.open("relatorio.html")
 
 
 
